@@ -1,3 +1,28 @@
+"""
+MIT License
+
+Copyright (c) 2020, Maarten P. Grootendorst
+Modofied Copyright (c) 2022, NVIDIA
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
+
 import numpy as np
 import logging
 from collections.abc import Iterable
@@ -68,6 +93,18 @@ def check_is_fitted(model):
 
     if not model.topics:
         raise ValueError(msg % {'name': type(model).__name__})
+
+
+def is_hdbscan_like(estimator):
+    key_hdbscan_attributes = [
+            "labels_",
+            "probabilities_",
+            "condensed_tree_",
+            "single_linkage_tree_",
+            "minimum_spanning_tree_",
+            "fit",
+        ]
+        return all(hasattr(estimator, attr) for attr in key_hdbscan_attributes)
 
 
 class NotInstalled:
